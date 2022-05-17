@@ -2,9 +2,10 @@ require "uri"
 require "net/http"
 require "json"
 
-def request(url_request)
-
-    url = URI(url_request)
+def request(url_request,apik)
+    
+    urlandapi = url_request + apik
+    url = URI(urlandapi)
     
     https = Net::HTTP.new(url.host, url.port)
     https.use_ssl = true
@@ -50,9 +51,9 @@ def cont_photos(principal)
 end
 
 
-principal = request("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DCQZgXMlvJjgCGJi8oWMtsotSEvs9PP8egenN3NN")
+principal = request("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&", "api_key=#{ARGV[0]}")
 build_web_page(principal)
-cont_photos(principal)
+puts cont_photos(principal)
     
     
 
